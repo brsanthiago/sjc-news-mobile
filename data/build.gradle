@@ -1,0 +1,28 @@
+apply plugin: 'kotlin'
+
+configurations.all {
+    resolutionStrategy {
+        force "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    compile "io.reactivex.rxjava2:rxjava:${rx_version}"
+
+    // Communications
+    compile "com.squareup.okhttp3:okhttp:${okhttp_version}"
+    compile("com.squareup.retrofit2:retrofit:${retrofit_version}") {
+        exclude module: 'okhttp'
+    }
+    compile "com.squareup.retrofit2:adapter-rxjava2:${retrofit_version}"
+
+    // Json Mapper
+    compile "com.squareup.retrofit2:converter-gson:${gson_converter_version}"
+    compile "com.google.code.gson:gson:${gson_version}"
+    compile 'com.squareup.retrofit2:converter-moshi:2.1.0'
+    // RX Android
+    compile 'io.reactivex:rxandroid:1.2.0'
+    compile 'io.reactivex:rxkotlin:0.55.0'
+}
