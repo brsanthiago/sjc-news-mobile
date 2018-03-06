@@ -3,4 +3,10 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="pref_size">56dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="picture_size">60dp</dimen>
+    <dimen name="text_size_small">15sp</dimen>
+    <dimen name="text_size_min">10sp</dimen>
+    <dimen name="space_min">4dp</dimen>
+    <dimen name="margin_huge">64dp</dimen>
 </resources>

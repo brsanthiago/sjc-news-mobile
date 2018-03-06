@@ -1,33 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="72dp"
-    android:padding="6dip"
-    android:clickable="true">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/frame_layout_feed_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground">
 
-    <TextView
-        android:id="@+id/tv_name"
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignWithParentIfMissing="true"
-        android:gravity="center_vertical"
-        android:paddingBottom="5dp"
-        android:paddingLeft="5dp"
-        android:text="Username"
-        android:textSize="14sp" />
+        android:layout_marginLeft="@dimen/margin_small"
+        android:layout_marginRight="@dimen/margin_small"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_email"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/tv_name"
-        android:ellipsize="marquee"
-        android:paddingLeft="5dp"
-        android:singleLine="true"
-        android:text="Content"
-        android:textSize="12sp" />
+        <android.support.v4.widget.Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_small" />
 
-</RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="@dimen/picture_size"
+                android:layout_height="@dimen/picture_size">
+
+                <ImageView
+                    android:id="@+id/iv_picture"
+                    android:layout_width="@dimen/picture_size"
+                    android:layout_height="@dimen/picture_size"
+                    android:src="@drawable/sjc_circle"
+                    />
+
+            </RelativeLayout>
+
+            <android.support.v4.widget.Space
+                android:layout_width="@dimen/margin_small"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/feed_title"
+                    android:textSize="@dimen/text_size_small" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_site"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="@string/feed_sjc"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/text_size_min" />
+
+                    <TextView
+                        android:id="@+id/tv_category"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text="@string/feed_category"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/text_size_min" />
+
+                </RelativeLayout>
+
+                <android.support.v4.widget.Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/space_min" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_link"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_toLeftOf="@+id/tv_date"
+                        android:text="@string/feed_link"
+                        android:textColor="@color/md_grey_500"
+                        android:textSize="@dimen/text_size_min" />
+
+                    <TextView
+                        android:id="@+id/tv_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text="@string/feed_date"
+                        android:textColor="@color/md_grey_500"
+
+                        android:textSize="@dimen/text_size_min" />
+
+                </RelativeLayout>
+
+                <android.support.v4.widget.Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/space_min" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <android.support.v4.widget.Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_small" />
+
+        <View
+            style="@style/Divider"
+            android:layout_marginLeft="@dimen/margin_huge" />
+
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,4 +1,4 @@
-package br.com.brsantiago.spartabank.extension
+package br.com.brsantiago.sjcnews.data.extensions
 
 import com.squareup.moshi.Moshi
 import java.text.SimpleDateFormat

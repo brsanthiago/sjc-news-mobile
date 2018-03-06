@@ -25,7 +25,7 @@ class NoticeMapper {
 
     private fun transformToDomain(notice: Notice) : NoticeDomain {
         return NoticeDomain(notice.code,
-                notice.guid, notice.link, notice.link,
+                notice.guid, notice.link, notice.title,
                 notice.picture, notice.pictureCredit,
                 notice.pictureLegend, notice.pubDate)
     }

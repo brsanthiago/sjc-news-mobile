@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">SJC News</string>
+    <string name="feed_date">Data</string>
+    <string name="feed_link">Link</string>
+    <string name="feed_category">Categoria</string>
+    <string name="feed_sjc">Prefeitura São José dos Campos</string>
+    <string name="feed_title">Título</string>
 </resources>
