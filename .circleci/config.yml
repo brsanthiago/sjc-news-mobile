@@ -62,7 +62,6 @@ jobs:
     <<: *config-android
 
     steps:
-      - checkout:
 
       - *restore_cache
 
@@ -70,9 +69,6 @@ jobs:
           name: Accept licenses
           command: yes | sdkmanager --licenses || true
 
-      - run:
-          name: Run Tests and generate Code Coverage
-          command: ./gradlew createCombinedCoverageReport --stacktrace
 
       - run:
           name: Upload code coverage data
