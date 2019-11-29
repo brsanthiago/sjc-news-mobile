@@ -2,7 +2,7 @@ version: 2
 
 references:
   workspace: &workspace
-               ~/social-app
+               ~/sjc-news-mobile
 
   config-android: &config-android
     docker:
@@ -48,7 +48,7 @@ references:
       at: *workspace
 
 commands:
-  store-social-app-artifacts:
+  store-sjc-news-mobile-artifacts:
     description: "It stores Lint & Test artifacts"
     parameters:
       artifact-path:
@@ -69,10 +69,6 @@ jobs:
       - run:
           name: Accept licenses
           command: yes | sdkmanager --licenses || true
-
-      - run:
-          name: Run Linters
-          command: ./gradlew check --stacktrace
 
       - run:
           name: Run Tests and generate Code Coverage
