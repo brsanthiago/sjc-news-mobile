@@ -1,33 +1,120 @@
-# Android CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-android/ for more details
-#
-version: 2.1
+version: 2
+
+references:
+  workspace: &workspace
+               ~/social-app
+
+  config-android: &config-android
+    docker:
+      - image: circleci/android:api-29
+    working_directory: *workspace
+    enviroment:
+      JAVA_TOOL_OPTIONS: "-Xmx4096m -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
+      GRADLE_OPTS: "-Xms512m -Xmx4096m -Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2 -Djava.util.concurrent.ForkJoinPool.common.parallelism=2 -Dkotlin.incremental=false"
+      CIRCLE_JDK_VERSION: openjdk8
+      TERM: dumb
+
+  config-gcloud: &config-gcloud
+    docker:
+      - image: google/cloud-sdk:latest
+    working_directory: *workspace
+    environment:
+      TERM: dumb
+
+  cache_key: &cache_key
+    key: jars-{{ checksum "build.gradle" }}-{{ checksum "presentation/build.gradle" }}-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+
+  restore_cache: &restore_cache
+    restore_cache:
+      <<: *cache_key
+
+  save_cache: &save_cache
+    save_cache:
+      <<: *cache_key
+      paths:
+        - ~/.gradle/caches
+        - ~/.gradle/wrapper
+
+  persist_to_workspace: &persist_to_workspace
+    persist_to_workspace:
+      root: .
+      paths:
+        - presentation/build/reports
+        - presentation/build/outputs
+        - scripts/**
+
+  attach_workspace: &attach_workspace
+    attach_workspace:
+      at: *workspace
+
+commands:
+  store-social-app-artifacts:
+    description: "It stores Lint & Test artifacts"
+    parameters:
+      artifact-path:
+        type: string
+    steps:
+      - store_artifacts:
+          path: <<paramters.artifact-path>>
+
 jobs:
   build:
-    working_directory: ~/sjc-news-mobile
-    docker:
-      - image: circleci/android:api-28
-    environment:
-      GRADLE_OPTS: -Xmx4g -Dorg.gradle.daemon=false
-      JVM_OPTS: -Xmx4g
+    <<: *config-android
+
     steps:
       - checkout
-      - restore_cache:
-          key: gradle-{{ checksum "build.gradle" }}-{{ checksum  "buildSrc/src/main/java/Dependencies.kt" }}-{{ checksum  "gradle/wrapper/gradle-wrapper.properties" }}
-#      - run:
-#          name: Run Detekt
-#          command: ./gradlew detekt
+
+      - *restore_cache
+
       - run:
-          name: Run Ktlint
-          command: ./gradlew ktlint
+          name: Accept licenses
+          command: yes | sdkmanager --licenses || true
+
       - run:
-          name: Run Lint
-          command: ./gradlew lintDebug
+          name: Decrypt release key
+          command: openssl aes-256-cbc -d -in distribution/release.keystore-cipher -out distribution/release.keystore -md sha256 -k $CIPHER_DECRYPT_KEY
+       - run:
+          name: Run Linters
+          command: ./gradlew check --stacktrace
+
       - run:
-          name: Run Unit Tests
-          command: ./gradlew testDebugUnitTest
-      - save_cache:
-          paths:
-            - ~/.gradle
-          key: gradle-{{ checksum "build.gradle" }}-{{ checksum  "buildSrc/src/main/java/Dependencies.kt" }}-{{ checksum  "gradle/wrapper/gradle-wrapper.properties" }}
+          name: Run Tests and generate Code Coverage
+          command: ./gradlew createCombinedCoverageReport --stacktrace
+
+      - run:
+          name: Upload code coverage data
+          command: ./gradlew coveralls --stacktrace
+
+      - run:
+          name: Build
+          command: ./gradlew assemble assembleAndroidTest --stacktrace
+
+      - store_test_results:
+          path: presentation/build/test-results
+
+      - store_artifacts:
+          path: presentation/build/reports
+          destination: reports
+
+      - store_artifacts:
+          path: presentation/build/outputs/apk
+          destination: apks
+
+      - store_artifacts:
+          path: presentation/build/outputs/bundle
+          destination: bundle
+
+      - *save_cache
+
+      - *persist_to_workspace
+
+
+workflows:
+  version: 2
+
+  build_and_test:
+    jobs:
+      - build
+      - test_instrumented:
+          requires:
+            - build
