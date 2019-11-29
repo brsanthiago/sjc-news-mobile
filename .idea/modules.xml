@@ -6,7 +6,11 @@
       <module fileurl="file://$PROJECT_DIR$/data/data.iml" filepath="$PROJECT_DIR$/data/data.iml" />
       <module fileurl="file://$PROJECT_DIR$/domain/domain.iml" filepath="$PROJECT_DIR$/domain/domain.iml" />
       <module fileurl="file://$PROJECT_DIR$/presentation/presentation.iml" filepath="$PROJECT_DIR$/presentation/presentation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/projects-sjc-news-mobile.iml" filepath="$PROJECT_DIR$/projects-sjc-news-mobile.iml" />
       <module fileurl="file://$PROJECT_DIR$/sjc-news-mobile.iml" filepath="$PROJECT_DIR$/sjc-news-mobile.iml" />
+      <module fileurl="file://$PROJECT_DIR$/data/sjc-news-mobile-data.iml" filepath="$PROJECT_DIR$/data/sjc-news-mobile-data.iml" />
+      <module fileurl="file://$PROJECT_DIR$/domain/sjc-news-mobile-domain.iml" filepath="$PROJECT_DIR$/domain/sjc-news-mobile-domain.iml" />
+      <module fileurl="file://$PROJECT_DIR$/presentation/sjc-news-mobile-presentation.iml" filepath="$PROJECT_DIR$/presentation/sjc-news-mobile-presentation.iml" />
     </modules>
   </component>
 </project>
