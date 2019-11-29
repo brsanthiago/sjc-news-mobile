@@ -62,7 +62,7 @@ jobs:
     <<: *config-android
 
     steps:
-      - checkout
+      - checkout:
 
       - *restore_cache
 
@@ -71,9 +71,6 @@ jobs:
           command: yes | sdkmanager --licenses || true
 
       - run:
-          name: Decrypt release key
-          command: openssl aes-256-cbc -d -in distribution/release.keystore-cipher -out distribution/release.keystore -md sha256 -k $CIPHER_DECRYPT_KEY
-       - run:
           name: Run Linters
           command: ./gradlew check --stacktrace
 
@@ -107,7 +104,6 @@ jobs:
       - *save_cache
 
       - *persist_to_workspace
-
 
 workflows:
   version: 2
